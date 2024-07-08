@@ -24,9 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         if ($row["username"] == "admin") {
             // Redirect to edit.php for admin user
-            header("Location: edit.php");
+            session_start();
+            $_SESSION["username"] = $row["username"];
+
+            header("Location: adminDashBoard.php");
             exit();
         } else {
+            // Start session and store username
+            session_start();
+            $_SESSION["username"] = $row["username"];
+            
             // Redirect to index.php for other users
             header("Location: index.php");
             exit();

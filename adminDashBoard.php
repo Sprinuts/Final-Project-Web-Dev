@@ -7,6 +7,12 @@ if (session_status() == PHP_SESSION_NONE) {
 if(isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 
+    // Check if username is "admin"
+    if ($username !== "admin") {
+        header("Location: login.php"); // Redirect to login page
+        exit(); // Stop further execution
+    }
+
     // Connect to the database
     $servername = "localhost";
     $username_db = "root";
@@ -29,7 +35,7 @@ if(isset($_SESSION['username'])) {
     // Check if username exists in the database
     if ($result->num_rows > 0) {
         // Username is valid
-        echo "Username is valid.";
+        echo "Username is valid. Welcome admin";
     } else {
         // Username is not valid
         echo "Username is not valid.";
@@ -70,6 +76,9 @@ if(isset($_SESSION['username'])) {
                 <?php
                 $page = $_GET['page'] ?? 'home'; // Default to home page if no specific page request
                 switch ($page) {
+                    case 'addbook':
+                        include 'addBook.php';
+                        break;
                     case 'books':
                         include 'books.php';
                         break;
