@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index.php" class="brand-link">
-        <span class="brand-text font-weight-light">Video Rental</span>
+    <a href="adminDashBoard.php" class="brand-link">
+        <span class="brand-text font-weight-light">Admin Menu</span>
     </a>
 
     <!-- Sidebar -->
@@ -10,21 +10,21 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="index.php?page=addbook" class="nav-link">
+                    <a href="adminDashBoard.php?page=addBook" class="nav-link">
                         <i class="nav-icon fas fa-plus-square"></i>
                         <p>Add a Book</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?page=borrow" class="nav-link">
+                    <a href="adminDashBoard.php?page=editBook" class="nav-link">
                         <i class="nav-icon fas fa-video"></i>
                         <p>Edit a Book</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?page=return" class="nav-link">
+                    <a href="adminDashBoard.php?page=books" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>Return a Book</p>
+                        <p>Books</p>
                     </a>
                 </li>
                 <!-- Logout Link -->

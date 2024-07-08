@@ -68,28 +68,28 @@ if(isset($_SESSION['username'])) {
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- Navbar -->
-    <?php include 'menu.php'; ?>
+    <?php include 'adminMenu.php'; ?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <section class="content">
             <div class="container-fluid">
                 <?php
-                $page = $_GET['page'] ?? 'home'; // Default to home page if no specific page request
+                $page = $_GET['page'] ?? 'home';
                 switch ($page) {
-                    case 'addbook':
+                    case 'addBook':
                         include 'addBook.php';
+                        break;
+                    case 'editBook':
+                        include 'editBook.php';
                         break;
                     case 'books':
                         include 'books.php';
-                        break;
-                    case 'borrow':
-                        include 'borrow.php';
                         break;
                     case 'return':
                         include 'return.php';
                         break;
                     default:
-                        echo '<div class="alert alert-info">Welcome to Baranda Library!</div>';
+                        echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';
                         break;
                 }
                 ?>

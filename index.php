@@ -80,7 +80,7 @@ if(isset($_SESSION['username'])) {
                         include 'return.php';
                         break;
                     default:
-                        echo '<div class="alert alert-info">Welcome to the Video Rental System!</div>';
+                        echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';
                         break;
                 }
                 ?>
