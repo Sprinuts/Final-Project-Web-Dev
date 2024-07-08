@@ -52,7 +52,10 @@ if(isset($_SESSION['username'])) {
     header("Location: login.php"); // Redirect to login page
     exit(); // Stop further execution
 }
+
+require 'functions.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
