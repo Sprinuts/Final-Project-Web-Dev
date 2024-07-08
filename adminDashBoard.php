@@ -82,14 +82,8 @@ require 'functions.php';
                     case 'addBook':
                         include 'addBook.php';
                         break;
-                    case 'editBook':
-                        include 'editBook.php';
-                        break;
-                    case 'books':
-                        include 'books.php';
-                        break;
-                    case 'return':
-                        include 'return.php';
+                    case 'viewBook':
+                        include 'viewBook.php';
                         break;
                     default:
                         echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';

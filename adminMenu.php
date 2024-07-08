@@ -16,15 +16,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="adminDashBoard.php?page=editBook" class="nav-link">
-                        <i class="nav-icon fas fa-video"></i>
-                        <p>Edit a Book</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="adminDashBoard.php?page=books" class="nav-link">
+                    <a href="adminDashBoard.php?page=viewBook" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>Books</p>
+                        <p>View Books</p>
                     </a>
                 </li>
                 <!-- Logout Link -->
