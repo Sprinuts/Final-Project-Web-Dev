@@ -47,5 +47,34 @@ function addBook($bookId, $booktitle, $month, $day, $year, $category, $archived)
     }
 }
 
+function getUsername() {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT username FROM login";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $usernames = array();
+        while ($row = $result->fetch_assoc()) {
+            $usernames[] = $row['username'];
+        }
+        return $usernames;
+    } else {
+        return array();
+    }
+}
+
+function register($username, $password) {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "INSERT INTO login (username, password) VALUES ('$username', '$password')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "User registered successfully";
+    } else {
+        echo "Error registering user: " . $conn->error;
+    }
+    
+}
 
 ?>
