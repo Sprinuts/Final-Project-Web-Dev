@@ -85,6 +85,10 @@ require 'functions.php';
                     case 'viewBook':
                         include 'viewBook.php';
                         break;
+                    case 'edit':
+                        include 'editBook.php';
+                        break;
+                    
                     default:
                         echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';
                         break;

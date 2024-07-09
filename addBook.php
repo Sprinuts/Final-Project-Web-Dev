@@ -1,11 +1,21 @@
 <?php
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Generate book ID
-    $bookId = substr(strtoupper($_POST['booktitle']), 0, 2) . strtoupper($_POST['month']) . $_POST['day'] . $_POST['year'] . '-' . $_POST['category'];
+
+    // Get the date from the form
+    $date = $_POST['date'];
+    $parts = explode('-', $date);
+    $month = $parts[1];
+    $day = $parts[2];
+    $year = $parts[0];
+
+    $bookcategory = substr($_POST['category'], 0, 3);
+
+    # Generate a unique book ID
+    $bookId = substr(strtoupper($_POST['booktitle']), 0, 2) . strtoupper($month) . $day . $year . '-' . strtoupper($bookcategory);
 
     // Call the addBook function from functions.php
-    addBook($bookId, $_POST['booktitle'], $_POST['month'], $_POST['day'], $_POST['year'], $_POST['category'], $_POST['archived']);
+    addBook($bookId, $_POST['booktitle'], $month, $day, $year, $_POST['category'], $_POST['archived']);
 
     // Display a success message
     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -29,16 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" name="booktitle" placeholder="Enter title" required>
             </div>
             <div class="form-group">
-                <label for="month">Month</label>
-                <input type="text" class="form-control" name="month" placeholder="Enter month" required>
-            </div>
-            <div class="form-group">
-                <label for="day">Day</label>
-                <input type="text" class="form-control" name="day" placeholder="Enter day" required>
-            </div>
-            <div class="form-group">
-                <label for="year">Year</label>
-                <input type="text" class="form-control" name="year" placeholder="Enter year" required>
+                <label for="date">Date</label>
+                <input type="date" class="form-control" name="date" required>
             </div>
             <div class="form-group">
                 <label for="category">Genre</label>
@@ -56,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
             </div>
             <div class="form-group">
-                <label for="archive">Archive</label>
+                <label for="archive">Is the book archived</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="archived" id="archiveYes" value="1" required>
                     <label class="form-check-label" for="archiveYes">
