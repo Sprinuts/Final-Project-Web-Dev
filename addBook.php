@@ -2,28 +2,53 @@
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Get the date from the form
-    $date = $_POST['date'];
-    $parts = explode('-', $date);
-    $month = $parts[1];
-    $day = $parts[2];
-    $year = $parts[0];
+    // Get the latest book count from the database
+    $books = getBooks();
+    $latestBook = end($books);
+    $count = $latestBook['count'];
 
-    $bookcategory = substr($_POST['category'], 0, 3);
+    // Format the latest book count
+    $formattedBookCount = sprintf("%05d", $count + 1);
 
-    # Generate a unique book ID
-    $bookId = substr(strtoupper($_POST['booktitle']), 0, 2) . strtoupper($month) . $day . $year . '-' . strtoupper($bookcategory);
-
-    // Call the addBook function from functions.php
-    addBook($bookId, $_POST['booktitle'], $month, $day, $year, $_POST['category'], $_POST['archived']);
-
-    // Display a success message
-    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Video added successfully.
+    // Check if the book count has reached the maximum limit
+    if ($formattedBookCount == "99999") {
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Maximum book count reached. Cannot add more books.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>';
+    } else {
+        // Set the book count
+        $bookcount = $formattedBookCount;
+
+        // Get the date from the form
+        $date = $_POST['date'];
+        $parts = explode('-', $date);
+        $monthNum = $parts[1];
+        $day = $parts[2];
+        $year = $parts[0];
+
+        // Convert the month number to month name
+        $monthText = date("F", mktime(0, 0, 0, $monthNum, 10));
+        $month = substr($monthText, 0, 3);
+
+        $bookcategory = substr($_POST['category'], 0, 3);
+
+        # Generate a unique book ID
+        $bookId = substr(strtoupper($_POST['booktitle']), 0, 2) . strtoupper($month) . $day . $year . '-' . strtoupper($bookcategory) . $bookcount;
+
+        // Call the addBook function from functions.php
+        addBook($bookId, $_POST['booktitle'], $monthNum, $day, $year, $_POST['category'], $_POST['archived']);
+
+        // Display a success message
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Book added successfully.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>';
+    }
 }
 ?>
 
