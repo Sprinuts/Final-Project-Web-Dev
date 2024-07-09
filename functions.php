@@ -64,6 +64,31 @@ function getUsername() {
     }
 }
 
+function getBookId($bookid) {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT * FROM books WHERE bookid = '$bookid'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        return $result->fetch_assoc();
+    } else {
+        return array();
+    }
+}
+
+function editBook($bookid, $newBookId, $booktitle, $month, $day, $year, $category, $archived) {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "UPDATE books SET bookId = '$newBookId', booktitle = '$booktitle', month = '$month', day = '$day', year = '$year', category = '$category', archived = '$archived' WHERE bookid = '$bookid'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Book edited successfully";
+    } else {
+        echo "Error editing book: " . $conn->error;
+    }
+}
+
 function register($username, $password) {
     global $conn; // Assuming $conn is the database connection object
 

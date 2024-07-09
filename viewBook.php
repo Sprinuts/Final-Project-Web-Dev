@@ -35,7 +35,7 @@
                             echo "<td>" . htmlspecialchars($book['archived']) . "</td>";
                             echo "<td>" . htmlspecialchars($book['count']) . "</td>";
                             echo "<td>
-                                <a href='adminDashBoard.php?page=edit{$book['bookid']}' class='btn btn-info'>Edit</a>
+                                <a href='adminDashBoard.php?page=edit&bookid={$book['bookid']}' class='btn btn-info'>Edit</a>
                                 </td>";
                             echo "</tr>";
                         }
