@@ -50,7 +50,7 @@ if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
             <script>
                 function confirmReturn() {
                     if (confirm("Are you sure you want to return this book?")) {
-                        window.location.href = "returnRequest.php?confirm=yes&bookid=<?= $bookid; ?>";
+                        window.location.href = "returning.php?confirm=yes&bookid=<?= $bookid; ?>";
                     }
                 }
             </script>
