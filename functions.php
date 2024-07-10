@@ -40,11 +40,11 @@ function getBooks() {
     }
 }
 
-function addBook($bookId, $booktitle, $month, $day, $year, $dayAdded, $category, $archived) {
+function addBook($bookId, $booktitle, $author, $month, $day, $year, $dayAdded, $category, $archived) {
     global $conn; // Assuming $conn is the database connection object
 
-    $sql = "INSERT INTO books (bookId, booktitle, month, day, year, category, archived) 
-            VALUES ('$bookId','$booktitle', '$month', '$day', '$year', '$category', '$archived')";
+    $sql = "INSERT INTO books (bookId, booktitle, author,month, day, year, category, archived) 
+            VALUES ('$bookId','$booktitle', '$author','$month', '$day', '$year', '$category', '$archived')";
 
     if ($conn->query($sql) === TRUE) {
         //echo "Video added successfully";
@@ -83,10 +83,10 @@ function getBookId($bookid) {
     }
 }
 
-function editBook($bookid, $newBookId, $booktitle, $month, $day, $year, $category, $archived) {
+function editBook($bookid, $newBookId, $booktitle, $author, $month, $day, $year, $category, $archived) {
     global $conn; // Assuming $conn is the database connection object
 
-    $sql = "UPDATE books SET bookId = '$newBookId', booktitle = '$booktitle', month = '$month', day = '$day', year = '$year', category = '$category', archived = '$archived' WHERE bookid = '$bookid'";
+    $sql = "UPDATE books SET bookId = '$newBookId', booktitle = '$booktitle', author = '$author', month = '$month', day = '$day', year = '$year', category = '$category', archived = '$archived' WHERE bookid = '$bookid'";
 
     if ($conn->query($sql) === TRUE) {
         echo "Book edited successfully";
@@ -106,6 +106,18 @@ function register($username, $password) {
         echo "Error registering user: " . $conn->error;
     }
     
+}
+
+function borrowBook($bookid) {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "UPDATE books SET borrowed = 1, bookDate = CURDATE() WHERE bookid = '$bookid'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Book borrowed successfully";
+    } else {
+        echo "Error borrowing book: " . $conn->error;
+    }
 }
 
 function isBookBorrowed($bookid) {

@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST['date'];
     $parts = explode('-', $date);
     $monthNum = $parts[1];
+    $day = $parts[2];
     $year = $parts[0];
 
     // Convert the month number to month name
@@ -29,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     # Generate a unique book ID
     $newBookId = strtoupper($booktitle) . strtoupper($month) . $dayAdded . $year . '-' . strtoupper($bookcategory) . $formattedBookCount;
 
-    editBook($_GET['bookid'], $newBookId, $_POST['booktitle'], $monthNum, $day, $year, $_POST['category'], $_POST['archived']);
+    editBook($_GET['bookid'], $newBookId, $_POST['booktitle'], $_POST['author'],$monthNum, $day, $year, $_POST['category'], $_POST['archived']);
 
     header('Location: adminDashBoard.php?page=updateSuccess');
 }
@@ -48,6 +49,10 @@ if (isset($_GET['bookid'])) {
             <div class="form-group">
                 <label>Title</label>
                 <input type="text" class="form-control" name="booktitle" value="<?php echo htmlspecialchars($bookId['booktitle']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" class="form-control" name="author" placeholder="Enter author" value="<?php echo htmlspecialchars($bookId['author']); ?>" required>
             </div>
             <div class="form-group">
                 <label>Date</label>
@@ -69,8 +74,19 @@ if (isset($_GET['bookid'])) {
                 </select>
             </div>
             <div class="form-group">
-                <label>Archived</label>
-                <input type="text" class="form-control" name="archived" value="<?php echo htmlspecialchars($bookId['archived']); ?>" required>
+                <label for="archive">Is the book archived</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="archived" id="archiveYes" value="1" <?php if ($bookId['archived'] == 1) echo "checked"; ?> required>
+                    <label class="form-check-label" for="archiveYes">
+                        Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="archived" id="archiveNo" value="0" <?php if ($bookId['archived'] == 0) echo "checked"; ?> required>
+                    <label class="form-check-label" for="archiveNo">
+                        No
+                    </label>
+                </div>
             </div>
         </div>
         <div class="card-footer">

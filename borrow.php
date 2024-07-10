@@ -30,8 +30,8 @@
                                 echo "<td>" . htmlspecialchars($book['category']) . "</td>";
                                 echo "<td>" . htmlspecialchars($book['status']) . "</td>";
                                 echo "<td>
-                                    <a href='index.php?page=renting&id={$book['bookid']}' class='btn btn-info'>Rent</a>
-                                    <a href='index.php?page=view_single&id={$book['bookid']}' class='btn btn-primary'>View Details</a>
+                                    <a href='index.php?page=borrowBook&id={$book['bookid']}' class='btn btn-info'>Borrow</a>
+                                    <a href='index.php?page=viewDetail&id={$book['bookid']}' class='btn btn-primary'>View Details</a>
                                     </td>";
                                 echo "</tr>";
                             }

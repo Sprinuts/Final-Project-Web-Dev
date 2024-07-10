@@ -9,6 +9,7 @@
                     <tr>
                         <th>Book ID</th>
                         <th>Title</th>
+                        <th>Author</th>
                         <th>Publish Date</th>
                         <th>Category</th>
                         <th>Status</th>
@@ -26,6 +27,7 @@
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($book['bookid']) . "</td>";
                             echo "<td>" . htmlspecialchars($book['booktitle']) . "</td>";
+                            echo "<td>" . htmlspecialchars($book['author']) . "</td>";
                             echo "<td>" . htmlspecialchars(date('m-d-Y', strtotime($book['month'] . '/' . $book['day'] . '/' . $book['year']))) . "</td>";
                             echo "<td>" . htmlspecialchars($book['category']) . "</td>";
                             echo "<td>" . htmlspecialchars($book['status']) . "</td>";

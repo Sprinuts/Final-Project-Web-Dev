@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bookId = strtoupper($booktitle) . strtoupper($month) . $dayAdded . $year . '-' . strtoupper($bookcategory) . $bookcount;
 
         // Call the addBook function from functions.php
-        addBook($bookId, $_POST['booktitle'], $monthNum, $day, $year, $dayAdded ,$_POST['category'], $_POST['archived']);
+        addBook($bookId, $_POST['booktitle'], $_POST['author'], $monthNum, $day, $year, $dayAdded ,$_POST['category'], $_POST['archived']);
 
         // Display a success message
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -66,6 +66,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <label for="booktitle">Title</label>
                 <input type="text" class="form-control" name="booktitle" placeholder="Enter title" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" class="form-control" name="booktitle" placeholder="Enter author" required>
             </div>
             <div class="form-group">
                 <label for="date">Date</label>
