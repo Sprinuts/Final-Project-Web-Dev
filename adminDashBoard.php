@@ -94,6 +94,9 @@ require 'functions.php';
                     case 'depositRequest':
                         include 'depositRequest.php';
                         break;
+                    case 'returnRequest':
+                        include 'returnRequest.php';
+                        break;
                     default:
                         echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';
                         break;

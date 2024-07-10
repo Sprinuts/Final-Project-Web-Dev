@@ -156,7 +156,16 @@ function returnRequest($bookid){
 function returnBook($bookid){
     global $conn; // Assuming $conn is the database connection object
 
-    $username = $_SESSION['username'];
+    $sql = "SELECT username FROM returnreq WHERE borrowedid = '$bookid'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $username = $row['username'];
+    } else {
+        echo "Username not found in returnreq table";
+        return;
+    }
     $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
     $result = $conn->query($sql);
 
@@ -212,6 +221,24 @@ function returnBook($bookid){
     } else {
         echo "Error deleting return request: " . $conn->error;
     }
+}
+
+function getReturnRequests(){
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT * FROM returnreq";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $requests = array();
+        while ($row = $result->fetch_assoc()) {
+            $requests[] = $row;
+        }
+        return $requests;
+    } else {
+        return array();
+    }
+
 }
 
 function getBookId($bookid) {

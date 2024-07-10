@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="adminDashBoard.php?page=depositRequest" class="nav-link">
+                    <a href="adminDashBoard.php?page=returnRequest" class="nav-link">
                         <i class="nav-icon fas fa-exclamation-circle"></i>
                         <p>Book Return Request</p>
                     </a>
