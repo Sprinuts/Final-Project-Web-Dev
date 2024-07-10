@@ -82,6 +82,9 @@ if(isset($_SESSION['username'])) {
                     case 'borrowBook':
                         include 'borrowBook.php';
                         break;
+                    case 'borrowSuccess':
+                        include 'borrowSuccess.php';
+                        break;
                     default:
                         echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';
                         break;

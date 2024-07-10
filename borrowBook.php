@@ -49,9 +49,7 @@ if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
             <script>
                 function confirmRent() {
                     if (confirm("Are you sure you want to borrow this book?")) {
-                        borrowBook($bookid);
-                        
-                        exit();
+                        window.location.href = "borrowBook.php?confirm=yes&bookid=<?= $bookid; ?>";
                     }
                 }
             </script>
@@ -65,9 +63,21 @@ if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
 <?php
     } else {
         setAlert("Book not found.", "danger");
-        header('Location: index.php?page=borrow');
+        //header('Location: index.php?page=borrow');
         exit();
     }
+} elseif (isset($_GET['confirm']) && $_GET['confirm'] == 'yes' && isset($_GET['bookid'])) {
+    // Confirm rent
+    $bookid = htmlspecialchars($_GET['bookid']);
+    if (borrowBook($bookid)) {
+        setAlert('Successfully borrowed the book.', 'success');
+        borrowBook($bookid);
+        header('Location: index.php?page=borrow');
+    } else {
+        setAlert('Unsuccessful', 'danger');
+    }
+    header('Location: index.php?page=borrowSuccess'); // Stay on the same page after processing rent
+    exit();
 } else {
     // No ID was provided
     setAlert('No book ID specified.', 'danger');

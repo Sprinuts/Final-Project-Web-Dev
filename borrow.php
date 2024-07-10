@@ -2,18 +2,14 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
+include_once 'functions.php';
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    
-    include_once 'functions.php';
     $borrowedBooks = getBorrowedBooks($username);
-    if (count($borrowedBooks) >= 2) {
-        echo "<script>alert('You have already borrowed 2 books. Please return a book before borrowing another.');</script>";
-    }
-}
+    if ($borrowedBooks) {
+        echo "<div class='alert alert-danger'>You have already borrowed 2 books. Please return a book before borrowing another.</div>";
+    } else{
 ?>
-
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Available Books</h3>
@@ -30,7 +26,6 @@ if (isset($_SESSION['username'])) {
                 </thead>
                 <tbody>
                     <?php
-                    include_once 'functions.php';
                     $books = getBooks();
                     if (count($books) > 0) {
                         $availableBook = array_filter($books, function($book) {
@@ -61,3 +56,7 @@ if (isset($_SESSION['username'])) {
         </div>
     </div>
 </div>
+<?php
+}
+}
+?>

@@ -72,22 +72,16 @@ function getUsername() {
 
 function getBorrowedBooks($username) {
     global $conn; // Assuming $conn is the database connection object
-
     $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows == 1) {
+    if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $borrowedBooks = array();
-        if ($row['borrowed1'] != null) {
-            $borrowedBooks[] = getBookId($row['borrowed1']);
+        if ($row['borrowed1'] != null && $row['borrowed2'] != null) {
+            return true;
         }
-        if ($row['borrowed2'] != null) {
-            $borrowedBooks[] = getBookId($row['borrowed2']);
-        }
-        return $borrowedBooks;
-    } else {
-        return array();
+    } else{
+        return false;
     }
 }
 
