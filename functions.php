@@ -85,6 +85,44 @@ function getBorrowedBooks($username) {
     }
 }
 
+function getBorrowedBooksList($username) {
+    global $conn; // Assuming $conn is the database connection object
+    $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $books = array();
+        if ($row['borrowed1'] != null) {
+            $books[] = getBookId($row['borrowed1']);
+        }
+        if ($row['borrowed2'] != null) {
+            $books[] = getBookId($row['borrowed2']);
+        }
+        return $books;
+    } else {
+        return array();
+    }
+}
+
+function getBookTitle($bookId){
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT booktitle FROM books";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $booktitles = array();
+        while ($row = $result->fetch_assoc()) {
+            $booktitles[] = $row['booktitle'];
+        }
+        return $booktitles;
+    } else {
+        return array();
+    }
+
+}
+
 function getBookId($bookid) {
     global $conn; // Assuming $conn is the database connection object
 
