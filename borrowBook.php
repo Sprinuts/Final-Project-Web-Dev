@@ -18,72 +18,70 @@ function displayAlert() {
     }
 }
 
-// Check if a valid video ID is passed and rent has not yet been confirmed
-if (isset($_GET['id']) && !isset($_GET['confirm'])) {
-    $videoId = htmlspecialchars($_GET['id']);
-    $video = getVideoById($videoId); // Retrieve video details
+// Check if a valid book ID is passed and borrow has not yet been confirmed
+if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
+    $bookid = htmlspecialchars($_GET['bookid']);
+    $book = getBookId($bookid); // Retrieve book details
 
-    if ($video) {
-        // Display rent confirmation form
+    if ($book) {
+        // Display borrow confirmation form
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rent Video</title>
+    <title>Borrow Book</title>
 </head>
 <body>
     <div class="container">
         <?php displayAlert(); // Display alert if there is one ?>
-        <h1 style="padding-top: 20px;">Rent Video</h1>
-        <p>Are you sure you want to rent this video?</p>
+        <h1 style="padding-top: 20px;">Borrow Book</h1>
+        <p>Are you sure you want to borrow this book?</p>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Title: <?= htmlspecialchars($video['title']) ?></h5>
-                <p class="card-text">Director: <?= htmlspecialchars($video['director']) ?></p>
-                <p class="card-text">Release Year: <?= htmlspecialchars($video['release_year']) ?></p>
-                <p class="card-text">Casting Members: <?= htmlspecialchars($video['casting_members']) ?></p>
-                <p class="card-text">Genre: <?= htmlspecialchars($video['genre']) ?></p>
-                <p class="card-text">Description/Synopsis: <?= htmlspecialchars($video['description']) ?></p>
-                <p class="card-text">Cost:  <?= htmlspecialchars($video['cost']) ?></p>
+                <h5 class="card-title">Title: <?= htmlspecialchars($book['title']) ?></h5>
+                <p class="card-text">Author: <?= htmlspecialchars($book['author']) ?></p>
+                <p class="card-text">Release Date: <?= htmlspecialchars(date('m-d-Y', strtotime($book['release_date']))) ?></p>
+                <p class="card-text">Category: <?= htmlspecialchars($book['category']) ?></p>
+                <p class="card-text">Status: <?= htmlspecialchars($book['status']) ?></p>
             </div>
         </div>
         <div>
-            <!-- JavaScript for confirmation dialog -->
             <script>
                 function confirmRent() {
-                    if (confirm("Are you sure you want to rent this video?")) {
-                        window.location.href = "renting.php?confirm=yes&id=<?= $videoId; ?>";
+                    if (confirm("Are you sure you want to borrow this book?")) {
+                        window.location.href = "borrowBook.php?confirm=yes&bookid=<?= $bookid; ?>";
                     }
                 }
             </script>
             <!-- Rent and cancel buttons -->
             <button onclick="confirmRent()" class="btn btn-info">Rent</button>
-            <a href="index.php?page=rent" class="btn btn-secondary">Cancel</a>
+            <a href="index.php?page=borrow" class="btn btn-secondary">Cancel</a>
         </div>
     </div>
 </body>
 </html>
 <?php
     } else {
-        setAlert("Video not found.", "danger");
-        header('Location: index.php?page=rent');
+        setAlert("Book not found.", "danger");
+        //header('Location: index.php?page=borrow');
         exit();
     }
-} elseif (isset($_GET['confirm']) && $_GET['confirm'] == 'yes' && isset($_GET['id'])) {
+} elseif (isset($_GET['confirm']) && $_GET['confirm'] == 'yes' && isset($_GET['bookid'])) {
     // Confirm rent
-    if (rentVideo($_GET['id'])) {
-        setAlert('Successfully rented a video.', 'success');
-        $_SESSION['isVideoRented'][] = $_GET['id']; // Add rented video to session
+    $bookid = htmlspecialchars($_GET['bookid']);
+    if (borrowBook($bookid)) {
+        setAlert('Successfully borrowed the book.', 'success');
+        $_SESSION['borrowedBooks'][] = $bookid; // Add borrowed book to session
     } else {
         setAlert('Insufficient balance.', 'danger');
     }
-    header('Location: index.php?page=renting&id=' . $_GET['id']); // Stay on the same page after processing rent
+    header('Location: index.php?page=borrowBook&id=' . $bookid); // Stay on the same page after processing rent
     exit();
 } else {
     // No ID was provided
-    setAlert('No video ID specified.', 'danger');
-    header('Location: index.php?page=rent');
+    setAlert('No book ID specified.', 'danger');
+    header('Location: index.php?page=borrow');
     exit();
 }
 ?>

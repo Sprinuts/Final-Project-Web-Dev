@@ -53,7 +53,7 @@ if(isset($_SESSION['username'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Rental System</title>
+    <title>Baranda Library</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
 
@@ -78,6 +78,9 @@ if(isset($_SESSION['username'])) {
                         break;
                     case 'return':
                         include 'return.php';
+                        break;
+                    case 'borrowBook':
+                        include 'borrowBook.php';
                         break;
                     default:
                         echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';

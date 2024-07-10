@@ -26,12 +26,13 @@
                             foreach ($availableBook as $book) {
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($book['booktitle']) . "</td>";
+                                echo "<td>" . htmlspecialchars($book['author']) . "</td>";
                                 echo "<td>" . htmlspecialchars(date('m-d-Y', strtotime($book['month'] . '/' . $book['day'] . '/' . $book['year']))) . "</td>";
                                 echo "<td>" . htmlspecialchars($book['category']) . "</td>";
                                 echo "<td>" . htmlspecialchars($book['status']) . "</td>";
                                 echo "<td>
-                                    <a href='index.php?page=borrowBook&id={$book['bookid']}' class='btn btn-info'>Borrow</a>
-                                    <a href='index.php?page=viewDetail&id={$book['bookid']}' class='btn btn-primary'>View Details</a>
+                                    <a href='index.php?page=borrowBook&bookid={$book['bookid']}' class='btn btn-info'>Borrow</a>
+                                    <a href='index.php?page=viewDetail&bookid={$book['bookid']}' class='btn btn-primary'>View Details</a>
                                     </td>";
                                 echo "</tr>";
                             }
