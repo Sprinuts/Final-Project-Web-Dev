@@ -119,6 +119,60 @@ function getBookTitle($bookid){
     }
 }
 
+function returnBook($bookid){
+    global $conn; // Assuming $conn is the database connection object
+
+    $username = $_SESSION['username'];
+    $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        if ($row['borrowed1'] == $bookid) {
+            $sql = "UPDATE login SET borrowed1 = NULL WHERE username = '$username'";
+        } elseif ($row['borrowed2'] == $bookid) {
+            $sql = "UPDATE login SET borrowed2 = NULL WHERE username = '$username'";
+        } else {
+            echo "Book not found in user's borrowed list";
+            return;
+        }
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Book removed from user's borrowed list";
+        } else {
+            echo "Error removing book from user's borrowed list: " . $conn->error;
+        }
+        
+        $sql = "SELECT borrowDate FROM login WHERE bookid = '$bookid'";
+        $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
+        $result = $conn->query($sql);
+
+        // Calculate fine if necessary
+        $borrowDate = $row['borrowDate'];
+        $currentDate = date('Y-m-d');
+        $daysDiff = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
+        if ($daysDiff > 7) {
+            $fine = $daysDiff * 10; // Assuming the fine is $5 per day
+            $sql = "UPDATE login SET money = money - $fine WHERE username = '$username'";
+            if ($conn->query($sql) === TRUE) {
+                echo "Fine of $fine deducted from user's money";
+            } else {
+                echo "Error deducting fine from user's money: " . $conn->error;
+            }
+        }
+    } else {
+        echo "User not found";
+    }
+
+    $sql = "UPDATE books SET borrowed = 0, borrowDate = NULL WHERE bookid = '$bookid'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Book returned successfully";
+    } else {
+        echo "Error returning book: " . $conn->error;
+    }
+}
+
 function getBookId($bookid) {
     global $conn; // Assuming $conn is the database connection object
 
