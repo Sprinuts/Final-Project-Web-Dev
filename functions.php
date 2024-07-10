@@ -144,7 +144,6 @@ function returnBook($bookid){
         }
         
         $sql = "SELECT borrowDate FROM login WHERE bookid = '$bookid'";
-        $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
         $result = $conn->query($sql);
 
         // Calculate fine if necessary
@@ -152,7 +151,7 @@ function returnBook($bookid){
         $currentDate = date('Y-m-d');
         $daysDiff = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
         if ($daysDiff > 7) {
-            $fine = $daysDiff * 10; // Assuming the fine is $5 per day
+            $fine = $daysDiff * 10; // Assuming the fine is $10 per day
             $sql = "UPDATE login SET money = money - $fine WHERE username = '$username'";
             if ($conn->query($sql) === TRUE) {
                 echo "Fine of $fine deducted from user's money";
