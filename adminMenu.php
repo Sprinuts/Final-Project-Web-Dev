@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="adminDashBoard.php" class="brand-link">
-        <span class="brand-text font-weight-light">Admin Menu</span>
+        <span class="brand-text font-weight-light">Librarian Menu</span>
     </a>
 
     <!-- Sidebar -->
@@ -19,6 +19,12 @@
                     <a href="adminDashBoard.php?page=viewBook" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>View Books</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="adminDashBoard.php?page=depositRequest" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>Deposit Request</p>
                     </a>
                 </li>
                 <!-- Logout Link -->

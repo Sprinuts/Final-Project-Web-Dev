@@ -8,11 +8,9 @@
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Month</th>
-                        <th>Day</th>
-                        <th>Year</th>
+                        <th>Release Date</th>
                         <th>Category</th>
-                        <th>Archived</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,11 +23,9 @@
                         foreach ($books as $book) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($book['booktitle']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['month']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['day']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['year']) . "</td>";
+                            echo "<td>" . htmlspecialchars(date('m-d-Y', strtotime($book['month'] . '/' . $book['day'] . '/' . $book['year']))) . "</td>";
                             echo "<td>" . htmlspecialchars($book['category']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['archived']) . "</td>";
+                            echo "<td>" . htmlspecialchars($book['status']) . "</td>";
                             echo "</tr>";
                         }
                     } else {

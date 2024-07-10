@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $parts = explode('-', $date);
         $monthNum = $parts[1];
         $day = $parts[2];
+        $dayAdded = date('d');
         $year = $parts[0];
 
         // Convert the month number to month name
@@ -35,11 +36,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $bookcategory = substr($_POST['category'], 0, 3);
 
+        $booktitle = preg_replace('/\s+/', '', $_POST['booktitle']);
+        $booktitle = substr($booktitle, 0, 2);
+
         # Generate a unique book ID
-        $bookId = substr(strtoupper($_POST['booktitle']), 0, 2) . strtoupper($month) . $day . $year . '-' . strtoupper($bookcategory) . $bookcount;
+        $bookId = strtoupper($booktitle) . strtoupper($month) . $dayAdded . $year . '-' . strtoupper($bookcategory) . $bookcount;
 
         // Call the addBook function from functions.php
-        addBook($bookId, $_POST['booktitle'], $monthNum, $day, $year, $_POST['category'], $_POST['archived']);
+        addBook($bookId, $_POST['booktitle'], $monthNum, $day, $year, $dayAdded ,$_POST['category'], $_POST['archived']);
 
         // Display a success message
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">

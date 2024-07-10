@@ -22,9 +22,15 @@ function getBooks() {
         while ($row = $result->fetch_assoc()) {
             // Modify the "archived" value
             if ($row['archived'] == 0) {
-                $row['archived'] = "No";
+                if ($row['borrowed'] == 0 or null){
+                    $row['status'] = "Available";
+                } else {
+                    $row['status'] = "Borrowed";
+                }
+                $row['archived'] = "Not Archived";
             } elseif ($row['archived'] == 1) {
-                $row['archived'] = "Yes";
+                $row['archived'] = "Archived";
+                $row['status'] = "Archived";
             }
             $books[] = $row;
         }
@@ -34,14 +40,14 @@ function getBooks() {
     }
 }
 
-function addBook($bookId, $booktitle, $month, $day, $year, $category, $archived) {
+function addBook($bookId, $booktitle, $month, $day, $year, $dayAdded, $category, $archived) {
     global $conn; // Assuming $conn is the database connection object
 
     $sql = "INSERT INTO books (bookId, booktitle, month, day, year, category, archived) 
             VALUES ('$bookId','$booktitle', '$month', '$day', '$year', '$category', '$archived')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Video added successfully";
+        //echo "Video added successfully";
     } else {
         echo "Error adding book: " . $conn->error;
     }

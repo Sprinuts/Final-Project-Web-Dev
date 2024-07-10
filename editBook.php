@@ -5,6 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($books as $book) {
         if ($book['bookid'] == $_GET['bookid']) {
             $count = $book['count'];
+            $dayAdded = $book['day'];
             break;
         }
     }
@@ -14,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST['date'];
     $parts = explode('-', $date);
     $monthNum = $parts[1];
-    $day = $parts[2];
     $year = $parts[0];
 
     // Convert the month number to month name
@@ -23,8 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $bookcategory = substr($_POST['category'], 0, 3);
 
+    $booktitle = preg_replace('/\s+/', '', $_POST['booktitle']);
+    $booktitle = substr($booktitle, 0, 2);
+
     # Generate a unique book ID
-    $newBookId = substr(strtoupper($_POST['booktitle']), 0, 2) . strtoupper($month) . $day . $year . '-' . strtoupper($bookcategory) . $formattedBookCount;
+    $newBookId = strtoupper($booktitle) . strtoupper($month) . $dayAdded . $year . '-' . strtoupper($bookcategory) . $formattedBookCount;
 
     editBook($_GET['bookid'], $newBookId, $_POST['booktitle'], $monthNum, $day, $year, $_POST['category'], $_POST['archived']);
 

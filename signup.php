@@ -11,6 +11,8 @@
             echo "Username already taken. Please choose a different username.";
         } else {
             register($username, $password);
+            header("Location: login.php");
+            exit;
         }
     }
 ?>

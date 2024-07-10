@@ -9,11 +9,9 @@
                     <tr>
                         <th>Book ID</th>
                         <th>Title</th>
-                        <th>Month</th>
-                        <th>Day</th>
-                        <th>Year</th>
+                        <th>Publish Date</th>
                         <th>Category</th>
-                        <th>Archived</th>
+                        <th>Status</th>
                         <th>Count</th>
                     </tr>
                 </thead>
@@ -28,11 +26,9 @@
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($book['bookid']) . "</td>";
                             echo "<td>" . htmlspecialchars($book['booktitle']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['month']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['day']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['year']) . "</td>";
+                            echo "<td>" . htmlspecialchars(date('m-d-Y', strtotime($book['month'] . '/' . $book['day'] . '/' . $book['year']))) . "</td>";
                             echo "<td>" . htmlspecialchars($book['category']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['archived']) . "</td>";
+                            echo "<td>" . htmlspecialchars($book['status']) . "</td>";
                             echo "<td>" . htmlspecialchars($book['count']) . "</td>";
                             echo "<td>
                                 <a href='adminDashBoard.php?page=edit&bookid={$book['bookid']}' class='btn btn-info'>Edit</a>
