@@ -39,23 +39,24 @@ if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
         <p>Are you sure you want to borrow this book?</p>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Title: <?= htmlspecialchars($book['title']) ?></h5>
+                <h5 class="card-title">Title: <?= htmlspecialchars($book['booktitle']) ?></h5>
                 <p class="card-text">Author: <?= htmlspecialchars($book['author']) ?></p>
-                <p class="card-text">Release Date: <?= htmlspecialchars(date('m-d-Y', strtotime($book['release_date']))) ?></p>
+                <p class="card-text">Release Date: <?= htmlspecialchars(date('m-d-Y', strtotime($book['month'] . '/' . $book['day'] . '/' . $book['year']))) ?></p>
                 <p class="card-text">Category: <?= htmlspecialchars($book['category']) ?></p>
-                <p class="card-text">Status: <?= htmlspecialchars($book['status']) ?></p>
             </div>
         </div>
         <div>
             <script>
                 function confirmRent() {
                     if (confirm("Are you sure you want to borrow this book?")) {
-                        window.location.href = "borrowBook.php?confirm=yes&bookid=<?= $bookid; ?>";
+                        borrowBook($bookid);
+                        
+                        exit();
                     }
                 }
             </script>
             <!-- Rent and cancel buttons -->
-            <button onclick="confirmRent()" class="btn btn-info">Rent</button>
+            <button onclick="confirmRent()" class="btn btn-info">Borrow</button>
             <a href="index.php?page=borrow" class="btn btn-secondary">Cancel</a>
         </div>
     </div>
@@ -64,20 +65,9 @@ if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
 <?php
     } else {
         setAlert("Book not found.", "danger");
-        //header('Location: index.php?page=borrow');
+        header('Location: index.php?page=borrow');
         exit();
     }
-} elseif (isset($_GET['confirm']) && $_GET['confirm'] == 'yes' && isset($_GET['bookid'])) {
-    // Confirm rent
-    $bookid = htmlspecialchars($_GET['bookid']);
-    if (borrowBook($bookid)) {
-        setAlert('Successfully borrowed the book.', 'success');
-        $_SESSION['borrowedBooks'][] = $bookid; // Add borrowed book to session
-    } else {
-        setAlert('Insufficient balance.', 'danger');
-    }
-    header('Location: index.php?page=borrowBook&id=' . $bookid); // Stay on the same page after processing rent
-    exit();
 } else {
     // No ID was provided
     setAlert('No book ID specified.', 'danger');

@@ -70,6 +70,27 @@ function getUsername() {
     }
 }
 
+function getBorrowedBooks($username) {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $borrowedBooks = array();
+        if ($row['borrowed1'] != null) {
+            $borrowedBooks[] = getBookId($row['borrowed1']);
+        }
+        if ($row['borrowed2'] != null) {
+            $borrowedBooks[] = getBookId($row['borrowed2']);
+        }
+        return $borrowedBooks;
+    } else {
+        return array();
+    }
+}
+
 function getBookId($bookid) {
     global $conn; // Assuming $conn is the database connection object
 
@@ -111,12 +132,36 @@ function register($username, $password) {
 function borrowBook($bookid) {
     global $conn; // Assuming $conn is the database connection object
 
-    $sql = "UPDATE books SET borrowed = 1, bookDate = CURDATE() WHERE bookid = '$bookid'";
+    $sql = "UPDATE books SET borrowed = 1, borrowDate = CURDATE() WHERE bookid = '$bookid'";
 
     if ($conn->query($sql) === TRUE) {
         echo "Book borrowed successfully";
     } else {
         echo "Error borrowing book: " . $conn->error;
+    }
+
+    $username = $_SESSION['username'];
+    $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        if ($row['borrowed1'] == null) {
+            $sql = "UPDATE login SET borrowed1 = '$bookid' WHERE username = '$username'";
+        } elseif ($row['borrowed2'] == null) {
+            $sql = "UPDATE login SET borrowed2 = '$bookid' WHERE username = '$username'";
+        } else {
+            echo "User has already borrowed 2 books";
+            return;
+        }
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Book added to user's borrowed list";
+        } else {
+            echo "Error adding book to user's borrowed list: " . $conn->error;
+        }
+    } else {
+        echo "User not found";
     }
 }
 
