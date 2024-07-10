@@ -70,9 +70,9 @@ if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
 } elseif (isset($_GET['confirm']) && $_GET['confirm'] == 'yes' && isset($_GET['bookid'])) {
     // Confirm return
     $bookid = htmlspecialchars($_GET['bookid']);
-    if (returnBook($bookid)) {
+    if (returnRequest($bookid)) {
         setAlert('Request Sent.', 'success');
-        returnBook($bookid);
+        returnRequest($bookid);
         header('Location: index.php?page=return');
     } else {
         setAlert('Unsuccessful', 'danger');

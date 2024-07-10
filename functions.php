@@ -43,8 +43,8 @@ function getBooks() {
 function addBook($bookId, $booktitle, $author, $month, $day, $year, $dayAdded, $category, $archived) {
     global $conn; // Assuming $conn is the database connection object
 
-    $sql = "INSERT INTO books (bookId, booktitle, author,month, day, year, category, archived) 
-            VALUES ('$bookId','$booktitle', '$author','$month', '$day', '$year', '$category', '$archived')";
+    $sql = "INSERT INTO books (bookId, booktitle, author,month, day, year, dayAdded ,category, archived) 
+            VALUES ('$bookId','$booktitle', '$author','$month', '$day', '$year', $dayAdded,'$category', '$archived')";
 
     if ($conn->query($sql) === TRUE) {
         //echo "Video added successfully";
@@ -119,6 +119,27 @@ function getBookTitle($bookid){
     }
 }
 
+function returnRequest($bookid){
+    global $conn; // Assuming $conn is the database connection object
+
+    $username = $_SESSION['username'];
+
+    $sql = "INSERT INTO returnreq (borrowedid, username) VALUES ('$bookid', '$username')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Return request stored successfully";
+    } else {
+        echo "Error storing return request: " . $conn->error;
+    }
+
+    $sql = "UPDATE books SET isreturning = 1 WHERE bookid = '$bookid'";
+    if ($conn->query($sql) === TRUE) {
+        echo "Return request updated successfully";
+    } else {
+        echo "Error storing return request: " . $conn->error;
+    }
+}
+
 function returnBook($bookid){
     global $conn; // Assuming $conn is the database connection object
 
@@ -143,7 +164,7 @@ function returnBook($bookid){
             echo "Error removing book from user's borrowed list: " . $conn->error;
         }
         
-        $sql = "SELECT borrowDate FROM login WHERE bookid = '$bookid'";
+        $sql = "SELECT borrowDate FROM books WHERE bookid = '$bookid'";
         $result = $conn->query($sql);
 
         // Calculate fine if necessary
@@ -169,6 +190,14 @@ function returnBook($bookid){
         echo "Book returned successfully";
     } else {
         echo "Error returning book: " . $conn->error;
+    }
+
+    $sql = "DELETE FROM returnreq WHERE borrowedid = '$bookid'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Return request deleted successfully";
+    } else {
+        echo "Error deleting return request: " . $conn->error;
     }
 }
 

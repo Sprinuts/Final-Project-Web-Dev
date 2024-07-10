@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($books as $book) {
         if ($book['bookid'] == $_GET['bookid']) {
             $count = $book['count'];
-            $dayAdded = $book['day'];
+            $dayAdded = $book['dayAdded'];
             break;
         }
     }
@@ -39,6 +39,9 @@ if (isset($_GET['bookid'])) {
     $bookId = getBookId($_GET['bookid']);
     $bookdate = $bookId['year'] . '-' . $bookId['month'] . '-' . $bookId['day'];
     if ($bookId !== null) {
+        if ($bookId['borrowed'] == 1) {
+            echo '<div class="alert alert-warning">This book is currently borrowed and cannot be edited.</div>';
+        } else {
 ?>
 <div class="card card-info">
     <div class="card-header">
@@ -96,6 +99,7 @@ if (isset($_GET['bookid'])) {
     </form>
 </div>
 <?php
+        }
     } else {
         echo '<div class="alert alert-warning">Book not found.</div>';
     }

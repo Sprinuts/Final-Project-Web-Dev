@@ -13,7 +13,6 @@
                         <th>Publish Date</th>
                         <th>Category</th>
                         <th>Status</th>
-                        <th>Count</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +30,6 @@
                             echo "<td>" . htmlspecialchars(date('m-d-Y', strtotime($book['month'] . '/' . $book['day'] . '/' . $book['year']))) . "</td>";
                             echo "<td>" . htmlspecialchars($book['category']) . "</td>";
                             echo "<td>" . htmlspecialchars($book['status']) . "</td>";
-                            echo "<td>" . htmlspecialchars($book['count']) . "</td>";
                             echo "<td>
                                 <a href='adminDashBoard.php?page=edit&bookid={$book['bookid']}' class='btn btn-info'>Edit</a>
                                 </td>";
