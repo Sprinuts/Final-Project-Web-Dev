@@ -108,4 +108,21 @@ function register($username, $password) {
     
 }
 
+function isBookBorrowed($bookid) {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT borrowed, archived FROM books WHERE bookid = '$bookid'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        if ($row['archived'] == 1) {
+            return true;
+        } else {
+            return (bool) $row['borrowed'];
+        }
+    } else {
+        return true;
+    }
+}
 ?>
