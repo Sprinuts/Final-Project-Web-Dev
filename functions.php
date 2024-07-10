@@ -105,22 +105,18 @@ function getBorrowedBooksList($username) {
     }
 }
 
-function getBookTitle($bookId){
+function getBookTitle($bookid){
     global $conn; // Assuming $conn is the database connection object
 
-    $sql = "SELECT booktitle FROM books";
+    $sql = "SELECT booktitle FROM books WHERE bookid = '$bookid'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        $booktitles = array();
-        while ($row = $result->fetch_assoc()) {
-            $booktitles[] = $row['booktitle'];
-        }
-        return $booktitles;
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        return $row['booktitle'];
     } else {
-        return array();
+        return null;
     }
-
 }
 
 function getBookId($bookid) {
