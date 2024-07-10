@@ -119,6 +119,19 @@ function getBookTitle($bookid){
     }
 }
 
+function checkBookExists($bookid){
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT * FROM returnreq WHERE borrowedid = '$bookid'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function returnRequest($bookid){
     global $conn; // Assuming $conn is the database connection object
 

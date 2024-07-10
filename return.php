@@ -27,11 +27,20 @@ $borrowedBooks = getBorrowedBooksList($username);
                         $bookTitle = getBookTitle($bookid['bookid']);
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($bookTitle) . "</td>";
-                        echo "<td>
+                        $bookExists = checkBookExists($bookid['bookid']);
+                        if (!$bookExists) {
+                            echo "<td>
                             <a href='index.php?page=returning&bookid={$bookid['bookid']}' class='btn btn-info'>Return</a>
                             <a href='index.php?page=viewDetail&bookid={$bookid['bookid']}' class='btn btn-primary'>View Details</a>
                             </td>";
-                        echo "</tr>";
+                            echo "</tr>";
+                        } else {
+                            echo "<td>Book is currently in return requests</td>";
+                            echo "<td>
+                            <a href='index.php?page=viewDetail&bookid={$bookid['bookid']}' class='btn btn-primary'>View Details</a>
+                            </td>";
+                            echo "</tr>";
+                        }
                     }
                 } else {
                     echo "<tr><td colspan='2' class='text-center'>No rented videos found</td></tr>";
