@@ -17,14 +17,20 @@
                 </li>
                 <li class="nav-item">
                     <a href="adminDashBoard.php?page=viewBook" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>View Books</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="adminDashBoard.php?page=depositRequest" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <i class="nav-icon fas fa-wallet"></i>
                         <p>Deposit Request</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="adminDashBoard.php?page=depositRequest" class="nav-link">
+                        <i class="nav-icon fas fa-exclamation-circle"></i>
+                        <p>Book Return Request</p>
                     </a>
                 </li>
                 <!-- Logout Link -->

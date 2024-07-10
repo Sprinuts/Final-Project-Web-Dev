@@ -91,6 +91,9 @@ require 'functions.php';
                     case 'updateSuccess':
                         include 'updateSuccess.php';
                         break;
+                    case 'depositRequest':
+                        include 'depositRequest.php';
+                        break;
                     default:
                         echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';
                         break;
