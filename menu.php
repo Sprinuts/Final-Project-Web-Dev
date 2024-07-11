@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
-        <span class="brand-text font-weight-light">Video Rental</span>
+        <span class="brand-text font-weight-light">Library</span>
     </a>
 
     <!-- Sidebar -->
