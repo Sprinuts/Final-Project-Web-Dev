@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <label for="author">Author</label>
-                <input type="text" class="form-control" name="booktitle" placeholder="Enter author" required>
+                <input type="text" class="form-control" name="author" placeholder="Enter author" required>
             </div>
             <div class="form-group">
                 <label for="date">Date</label>
