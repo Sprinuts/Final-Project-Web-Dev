@@ -4,15 +4,17 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_GET['id'])) {
+include_once 'functions.php';
+
+if (isset($_GET['bookid'])) {
     $bookid = htmlspecialchars($_GET['bookid']);
     $book = getBookId($bookid);
-    if ($video !== null) {
+    if ($book !== null) {
 ?>
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Video Details</h3>
+            <h3 class="card-title">Book Details</h3> 
         </div>
         <div class="card-body">
             <h5 class="card-title">Title: <?= htmlspecialchars($book['booktitle']) ?></h5>
@@ -27,9 +29,9 @@ if (isset($_GET['id'])) {
 </div>
 <?php
     } else {
-        echo '<div class="alert alert-warning">Video not found.</div>';
+        echo '<div class="alert alert-warning">Book not found.</div>';
     }
 } else {
-    echo '<div class="alert alert-danger">No video ID specified.</div>';
+    echo '<div class="alert alert-danger">No book ID specified.</div>';
 }
 ?>

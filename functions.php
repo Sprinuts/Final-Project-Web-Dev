@@ -70,6 +70,77 @@ function getUsername() {
     }
 }
 
+function requestDeposit($addBalance){
+    global $conn; // Assuming $conn is the database connection object
+
+    $username = $_SESSION['username'];
+    $sql = "INSERT INTO depositreq (username, amount) VALUES ('$username', $addBalance)";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Deposit request stored successfully";
+    } else {
+        echo "Error storing deposit request: " . $conn->error;
+    }
+}
+
+function depositAprove($username){
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT amount FROM depositreq WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $amount = $row['amount'];
+
+        $sql = "UPDATE login SET money = money + $amount WHERE username = '$username'";
+        if ($conn->query($sql) === TRUE) {
+            echo "Money updated successfully";
+        } else {
+            echo "Error updating money: " . $conn->error;
+        }
+    } else {
+        echo "Username not found in depositreq table";
+    }
+
+    $sql = "DELETE FROM depositreq WHERE username = '$username'";
+    if ($conn->query($sql) === TRUE) {
+        echo "Deposit request deleted successfully";
+    } else {
+        echo "Error deleting deposit request: " . $conn->error;
+    }
+}
+
+function returnDepositRequest(){
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT * FROM depositreq";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $requests = array();
+        while ($row = $result->fetch_assoc()) {
+            $requests[] = $row;
+        }
+        return $requests;
+    } else {
+        return array();
+    }
+}
+
+function getUserInfo($username) {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT * FROM login WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        return $row;
+    } else {
+        return array();
+    }
+}
 function getBorrowedBooks($username) {
     global $conn; // Assuming $conn is the database connection object
     $sql = "SELECT borrowed1, borrowed2 FROM login WHERE username = '$username'";

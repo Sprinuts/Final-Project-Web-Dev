@@ -92,6 +92,15 @@ if(isset($_SESSION['username'])) {
                     case 'viewDetail':
                         include 'viewDetail.php';
                         break;
+                    case 'profile':
+                        include 'profile.php';
+                        break;
+                    case 'deposit':
+                        include 'deposit.php';
+                        break; 
+                    case 'depositSuccess':
+                        include 'depositSuccess.php';
+                        break;
                     default:
                         echo '<div class="alert alert-success">Welcome to Baranda Library!</div>';
                         break;
