@@ -190,11 +190,12 @@ function returnBook($bookid){
         $result = $conn->query($sql);
 
         // Calculate fine if necessary
+        $row = $result->fetch_assoc();
         $borrowDate = $row['borrowDate'];
         $currentDate = date('Y-m-d');
         $daysDiff = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
         if ($daysDiff > 7) {
-            $fine = $daysDiff * 10; // Assuming the fine is $10 per day
+            $fine = $daysDiff * 10;
             $sql = "UPDATE login SET money = money - $fine WHERE username = '$username'";
             if ($conn->query($sql) === TRUE) {
                 echo "Fine of $fine deducted from user's money";
@@ -212,6 +213,36 @@ function returnBook($bookid){
         echo "Book returned successfully";
     } else {
         echo "Error returning book: " . $conn->error;
+    }
+
+    $sql = "DELETE FROM returnreq WHERE borrowedid = '$bookid'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Return request deleted successfully";
+    } else {
+        echo "Error deleting return request: " . $conn->error;
+    }
+
+    $sql = "UPDATE books SET isreturning = 0 WHERE bookid = '$bookid'";
+    if ($conn->query($sql) === TRUE) {
+        echo "Return request updated successfully";
+    } else {
+        echo "Error storing return request: " . $conn->error;
+    }
+}
+
+function cancelRequest($bookid){
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT username FROM returnreq WHERE borrowedid = '$bookid'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $username = $row['username'];
+    } else {
+        echo "Username not found in returnreq table";
+        return;
     }
 
     $sql = "DELETE FROM returnreq WHERE borrowedid = '$bookid'";

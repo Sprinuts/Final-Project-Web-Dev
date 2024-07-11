@@ -43,7 +43,7 @@ $borrowedBooks = getBorrowedBooksList($username);
                         }
                     }
                 } else {
-                    echo "<tr><td colspan='2' class='text-center'>No rented videos found</td></tr>";
+                    echo "<tr><td colspan='2' class='text-center'>No Books are Available for Returning</td></tr>";
                 }
                 ?>
             </tbody>

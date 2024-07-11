@@ -35,7 +35,7 @@ if(isset($_SESSION['username'])) {
     // Check if username exists in the database
     if ($result->num_rows > 0) {
         // Username is valid
-        echo "Username is valid. Welcome admin";
+        echo "<div style='width: auto; height: 1px; background-color: #383c44;'></div>";
     } else {
         // Username is not valid
         echo "Username is not valid.";

@@ -22,7 +22,6 @@ function displayAlert() {
 if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
     $bookid = htmlspecialchars($_GET['bookid']);
     $book = getBookId($bookid); // Retrieve book details
-    print_r($bookid);
 
     if ($book) {
         // Display return confirmation form
