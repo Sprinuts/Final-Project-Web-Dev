@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['returnButton'])) {
         $requestId = $_POST['returnButton'];
         returnBook($requestId);
+        header('Location: index.php?page=returnRequest');
     } elseif (isset($_POST['rejectButton'])) {
         $requestId = $_POST['rejectButton'];
         cancelRequest($requestId);

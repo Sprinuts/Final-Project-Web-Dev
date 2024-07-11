@@ -9,11 +9,11 @@ $returnDepositRequests = returnDepositRequest();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['returnButton'])) {
         $requestId = $_POST['returnButton'];
-        returnBook($requestId);
+        depositAprove($requestId);
     } elseif (isset($_POST['rejectButton'])) {
         $requestId = $_POST['rejectButton'];
         cancelRequest($requestId);
-        header('Location: index.php?page=returnRequest');
+        header('Location: index.php?page=deposit');
     }
 }
 ?>
@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <thead>
                 <tr>
                     <th>Username</th>
+                    <th>Amount</th>
                     <th>Approve</th>
                     <th>Reject</th>
                 </tr>
@@ -35,18 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <?php
                 if (count($returnDepositRequests) > 0) {
                     foreach ($returnDepositRequests as $request) {
-                        $username = getBookTitle($request['username']);
                         echo "<tr>";
-                        echo "<td>" . htmlspecialchars($bookTitle) . "</td>";
+                        echo "<td>" . htmlspecialchars($request['username']) . "</td>";
+                        echo "<td>" . htmlspecialchars($request['amount']) . "</td>";
                         echo "<td>
                             <form method='post'>
-                                <input type='hidden' name='returnButton' value='{$request['borrowedid']}' />
+                                <input type='hidden' name='returnButton' value='{$request['username']}' />
                                 <button type='submit' class='btn btn-success'>Approve</button>
                             </form>
                             </td>";
                         echo "<td>
                             <form method='post'>
-                                <input type='hidden' name='rejectButton' value='{$request['borrowedid']}' />
+                                <input type='hidden' name='rejectButton' value='{$request['username']}' />
                                 <button type='submit' class='btn btn-danger'>Reject</button>
                             </form>
                             </td>";
