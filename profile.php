@@ -4,6 +4,7 @@ include_once 'functions.php';
 $username = $_SESSION['username'];
 
 $user = getUserInfo($username);
+$depositReq = getAllUsernames();
 ?>
 
 <!DOCTYPE html>
@@ -118,9 +119,17 @@ $user = getUserInfo($username);
                 <div class="balance">
                     <strong>Balance:</strong> <?php echo htmlspecialchars($user['money']); ?>
                 </div>
-                <div class="mt-3">
-                    <a href="index.php?page=deposit" class="btn btn-primary">Deposit</a>
-                </div>
+                <?php
+                if (!in_array($username, $depositReq)) {
+                    echo '<div class="mt-3">
+                            <p>No deposit option available for this user.</p>
+                        </div>';
+                } else {
+                    echo '<div class="mt-3">
+                            <a href="index.php?page=deposit" class="btn btn-primary">Deposit</a>
+                        </div>';
+                }
+                ?>
             </div>
         </div>
     </div>

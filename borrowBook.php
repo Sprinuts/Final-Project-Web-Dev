@@ -76,7 +76,7 @@ if (isset($_GET['bookid']) && !isset($_GET['confirm'])) {
     } else {
         setAlert('Unsuccessful', 'danger');
     }
-    header('Location: index.php?page=borrowSuccess'); // Stay on the same page after processing rent
+    header('Location: index.php?page=borrowSuccess'); // Redirect to success page
     exit();
 } else {
     // No ID was provided

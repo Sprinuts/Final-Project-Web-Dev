@@ -5,9 +5,12 @@ if (session_status() == PHP_SESSION_NONE) {
 include_once 'functions.php';
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
+    $isNegative = isMoneyNegative($username);
     $borrowedBooks = getBorrowedBooks($username);
     if ($borrowedBooks) {
         echo "<div class='alert alert-danger'>You have already borrowed 2 books. Please return a book before borrowing another.</div>";
+    } else if($isNegative) {
+        echo "<div class='alert alert-danger'>You have a negative balance. Please deposit.</div>";
     } else{
 ?>
 <div class="card">

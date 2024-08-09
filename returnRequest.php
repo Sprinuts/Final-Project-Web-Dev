@@ -11,10 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $requestId = $_POST['returnButton'];
         returnBook($requestId);
         header('Location: index.php?page=returnRequest');
+        exit; // Add exit to stop further execution
     } elseif (isset($_POST['rejectButton'])) {
         $requestId = $_POST['rejectButton'];
         cancelRequest($requestId);
         header('Location: index.php?page=returnRequest');
+        exit; // Add exit to stop further execution
     }
 }
 ?>

@@ -9,6 +9,8 @@
         $existingUsernames = getUsername();
         if (in_array($username, $existingUsernames)) {
             echo "Username already taken. Please choose a different username.";
+        } elseif (!preg_match('/^[a-zA-Z]+$/', $username)) {
+            echo "Username can only contain letters.";
         } else {
             register($username, $password);
             header("Location: login.php");
@@ -132,7 +134,7 @@
             <i class="fas fa-user" style="color: #d4a373;"></i> <!-- Font Awesome icon for username -->
             Username:
         </label>
-        <input type="text" name="username" required><br><br>
+        <input type="text" name="username" pattern="[A-Za-z]+" title="Username can only contain letters." required><br><br>
         <label for="password">
             <i class="fas fa-lock" style="color: #d4a373;"></i> <!-- Font Awesome icon for password -->
             Password:

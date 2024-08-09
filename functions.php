@@ -83,6 +83,41 @@ function requestDeposit($addBalance){
     }
 }
 
+function getAllUsernames() {
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT username FROM depositreq";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $usernames = array();
+        while ($row = $result->fetch_assoc()) {
+            $usernames[] = $row['username'];
+        }
+        return $usernames;
+    } else {
+        return array();
+    }
+}
+
+function isMoneyNegative($username){
+    global $conn; // Assuming $conn is the database connection object
+
+    $sql = "SELECT money FROM login WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        if ($row['money'] < 0) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
 function depositAprove($username){
     global $conn; // Assuming $conn is the database connection object
 
@@ -210,12 +245,6 @@ function returnRequest($bookid){
 
     $sql = "INSERT INTO returnreq (borrowedid, username) VALUES ('$bookid', '$username')";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Return request stored successfully";
-    } else {
-        echo "Error storing return request: " . $conn->error;
-    }
-
     $sql = "UPDATE books SET isreturning = 1 WHERE bookid = '$bookid'";
     if ($conn->query($sql) === TRUE) {
         echo "Return request updated successfully";
@@ -266,6 +295,7 @@ function returnBook($bookid){
         $currentDate = date('Y-m-d');
         $daysDiff = (strtotime($currentDate) - strtotime($borrowDate)) / (60 * 60 * 24);
         if ($daysDiff > 7) {
+            $daysDiff -= 7; 
             $fine = $daysDiff * 10;
             $sql = "UPDATE login SET money = money - $fine WHERE username = '$username'";
             if ($conn->query($sql) === TRUE) {
